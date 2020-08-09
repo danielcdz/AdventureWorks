@@ -4,6 +4,6 @@ import React from 'react'
 export const Clientes = () => (
     
         <div>
-            <h2>Clientes papa</h2>
+            <h4>Módulo de Clientes</h4>
         </div>
     )

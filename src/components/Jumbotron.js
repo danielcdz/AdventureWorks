@@ -1,15 +1,16 @@
 import React from 'react'
-import {Jumbotron as Jumbo, Container} from 'react-bootstrap';
+import {Jumbotron as Jumbo, Container,Image,Row,Col} from 'react-bootstrap';
 import styled from 'styled-components';
 import adventureimg from '../assets/adventure.jpg';
 
 
 const Styles = styled.div`
     .jumbo{
-        background: url(${adventureimg}) no-repeat fixed bottom;
+        background-repeat: no-repeat;
         background-size: cover;
+        background-attachment: fixed bottom;
         color: #ccc;
-        height: 300px;
+        height: 400px;
         position: relative;
         z-index: -2;
     }
@@ -26,16 +27,27 @@ const Styles = styled.div`
 
     }
 
+    .imagen{
+        height: 300px   ;
+        weight: 300px   ;
+    }
+
 `;
 
 export const Jumbotron = () => (
 
     <Styles>
         <Jumbo fluid className="jumbo">
-            <div className="overlay"></div>
-           
+        <Container>
+        <Row>
+            <Col xs={6} md={4}>
+            <Image className="imagen" src={require('../assets/adventure.png')}  rounded />
+            </Col>
+        </Row>
+        </Container>
+            <div className="overlay">
+            </div>   
         </Jumbo>
-
     </Styles>
 
 )
