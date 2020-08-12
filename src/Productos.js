@@ -1,18 +1,37 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import {Container, Row,Col,InputGroup,FormControl,Button,Table} from 'react-bootstrap';
+import axios from 'axios';
 
 
 export const Productos = () => { 
 
 
-    // const [productos,setProductos]  = useState(['1','2','3','4','4','5','5','7','9','10']);
+    const [products, setProducts] = useState([]);
+    
+
 
     const {register, handleSubmit} = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        const dataJson = JSON.stringify(data);
+        console.log(dataJson);
+        axios.post("http://localhost:9000/Product",data)
+            .then(response => {
+                
+                const datosP = response.data;
+                
+                setProducts(prods => datosP);
+                console.log(datosP);
+            
+            })
+            .catch(error => console.log(error));
+
+        // console.log(datosP);
+        // console.log(dataJson);
     }
+    
+    // console.log(products);
 
     return(
         <div>
@@ -31,7 +50,7 @@ export const Productos = () => {
                                 <InputGroup.Text id="nombre">Nombre</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                    name="nombreProducto"
+                                    name="NombreProducto"
                                     ref={register}
                                 />
                             </InputGroup>
@@ -42,7 +61,7 @@ export const Productos = () => {
                                 <InputGroup.Text id="numero">Número Producto</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="numeroProducto"
+                                 name="NumeroProducto"
                                  ref={register}
                                 />
                             </InputGroup>
@@ -53,7 +72,7 @@ export const Productos = () => {
                                 <InputGroup.Text id="categoria">Categoría</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="categoriaProducto"
+                                 name="NombreCategoria"
                                  ref={register}
                                 />
                             </InputGroup>
@@ -66,7 +85,7 @@ export const Productos = () => {
                                 <InputGroup.Text id="modelo">Módelo</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="modeloProducto"
+                                 name="NombreModelo"
                                  ref={register}
                                 />
                             </InputGroup>
@@ -77,7 +96,7 @@ export const Productos = () => {
                                 <InputGroup.Text id="precioMax">Precio máximo</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="precioMax"
+                                 name="Precio2"
                                  type="number"
                                  ref={register}
                                 />
@@ -89,7 +108,7 @@ export const Productos = () => {
                                 <InputGroup.Text id="precioMin">Precio mínimo</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="precioMin"
+                                 name="Precio1"
                                  type="number"
                                  ref={register}
                                 />
@@ -104,20 +123,37 @@ export const Productos = () => {
             <Table responsive striped bordered hover size="sm" variant="dark" >
                 <thead>
                     <tr>
-                    <th>ProductID</th>
-                    <th>ProductName</th>
-                    <th>ProducNumber</th>
-                    <th>ProductCategoryName</th>
+                    <th>IDProducto</th>
+                    <th>NombreProducto</th>
+                    <th>NumeroProducto</th>
+                    <th>CategoriaProducto</th>
                     <th>Color</th>
-                    <th>Size</th>
-                    <th>ProductModelName</th>
-                    <th>StandartCost</th>
-                    <th>SellStartDate</th>
-                    <th>Quantity</th>
+                    <th>Talla</th>
+                    <th>ModeloProducto</th>
+                    <th>PrecioEstandar</th>
+                    <th>FechaDeInicioVenta</th>
+                    <th>Cantidad</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                        {
+                            products.map( (product) => (
+                                <tr>
+                                <td>{product.ProductID}</td>
+                                <td>{product.ProductName}</td>
+                                <td>{product.ProductNumber}</td>
+                                <td>{product.ProductCategoryName}</td>
+                                <td>{product.Color}</td>
+                                <td>{product.Size}</td>
+                                <td>{product.ProductModelName}</td>
+                                <td>{product.StandardCost}</td>
+                                <td>{product.SellStartDate}</td>
+                                <td>{product.Quantity}</td>
+                               
+                            </tr>
+                            ))
+                        }
+                    {/* <tr>
                         <td>1</td>
                         <td>mm</td>
                         <td>Otto</td>
@@ -128,7 +164,7 @@ export const Productos = () => {
                         <td>@mdo</td>
                         <td>@s</td>             
                         <td>@s</td>
-                    </tr>
+                    </tr> */}
                 </tbody>
             </Table>
             <br></br>
