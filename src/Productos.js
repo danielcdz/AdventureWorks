@@ -120,7 +120,7 @@ export const Productos = () => {
             </form>
             <br></br>
             <hr></hr>
-            <Table responsive striped bordered hover size="sm" variant="dark" >
+            <Table responsive striped bordered hover size="sm" variant="dark"  >
                 <thead>
                     <tr>
                     <th>IDProducto</th>
@@ -153,18 +153,6 @@ export const Productos = () => {
                             </tr>
                             ))
                         }
-                    {/* <tr>
-                        <td>1</td>
-                        <td>mm</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@s</td>             
-                        <td>@s</td>
-                    </tr> */}
                 </tbody>
             </Table>
             <br></br>

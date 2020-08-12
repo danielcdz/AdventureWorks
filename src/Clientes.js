@@ -1,12 +1,28 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import {Container, Row,Col,InputGroup,FormControl,Button,Table} from 'react-bootstrap';
+import axios from 'axios';
+
 
 export const Clientes = () => {
 
+    const [customers, setCustomers] = useState([]);
+    
     const {register, handleSubmit} = useForm();
 
     const onSubmit = (data) => {
+        const dataJson = JSON.stringify(data);
+        // console.log(dataJson);
+        axios.post("http://localhost:9000/Customer",data)
+            .then(response => {
+                const datosC = response.data;
+                setCustomers(cust => datosC);
+                console.log(datosC);
+            
+            })
+            .catch(error => console.log(error));
+
+
         console.log(data);
     }
 
@@ -24,11 +40,11 @@ export const Clientes = () => {
                         <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="personId">ID Cliente</InputGroup.Text>
+                                <InputGroup.Text id="PersonID">ID Cliente</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
                                     type="number"
-                                    name="personId"
+                                    name="PersonID"
                                     ref={register}
                                 />
                             </InputGroup>
@@ -36,10 +52,10 @@ export const Clientes = () => {
                         <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="nombreCliente">Nombre Cliente</InputGroup.Text>
+                                <InputGroup.Text id="NombreCliente">Nombre Cliente</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="nombreCliente"
+                                 name="NombreCliente"
                                  ref={register}
                                 />
                             </InputGroup>
@@ -47,11 +63,11 @@ export const Clientes = () => {
                         <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="territorioID">ID Territorio</InputGroup.Text>
+                                <InputGroup.Text id="TerritoryID">ID Territorio</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
                                 type="number"
-                                 name="territorioID"
+                                 name="TerritoryID"
                                  ref={register}
                                 />
                             </InputGroup>
@@ -61,10 +77,10 @@ export const Clientes = () => {
                     <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="nombreTerritorio">Nombre Territorio</InputGroup.Text>
+                                <InputGroup.Text id="NombreTerritorio">Nombre Territorio</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="nombreTerritorio"
+                                 name="NombreTerritorio"
                                  ref={register}
                                 />
                             </InputGroup>
@@ -72,10 +88,21 @@ export const Clientes = () => {
                         <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="idProducto">ID Producto</InputGroup.Text>
+                                <InputGroup.Text id="NombreProducto">Nombre Producto</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="idProducto"
+                                 name="NombreProducto"
+                                 ref={register}
+                                />
+                            </InputGroup>
+                        </Col>
+                        <Col xs={6} md={4}>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                <InputGroup.Text id="ProductID">ID Producto</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                 name="ProductID"
                                  type="number"
                                  ref={register}
                                 />
@@ -90,6 +117,7 @@ export const Clientes = () => {
             <Table responsive striped bordered hover size="sm" variant="dark" >
                 <thead>
                     <tr>
+                    <th>IDCliente</th>
                     <th>NombreCliente</th>
                     <th>IDTerritorio</th>
                     <th>NombreTerritorio</th>
@@ -98,13 +126,18 @@ export const Clientes = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>mm</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                {
+                    customers.map( (customer) => (
+                        <tr>
+                        <td>{customer.CustomerID}</td>
+                        <td>{customer.CustomerName}</td>
+                        <td>{customer.TerritoryID}</td>
+                        <td>{customer.TerritoryName}</td>
+                        <td>{customer.ProductID}</td>
+                        <td>{customer.ProductName}</td>
                     </tr>
+                    ))
+                }
                 </tbody>
             </Table>
             <br></br>

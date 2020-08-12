@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import {Container, Row,Col,InputGroup,FormControl,Button,Table} from 'react-bootstrap';
-
+import axios from 'axios';
 
 export const Proveedores = () => {
+
+
+    const [purchasers, setPurchasers] = useState([]);
 
     const {register, handleSubmit} = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        const dataJson = JSON.stringify(data);
+        console.log(dataJson);
+        axios.post("http://localhost:9000/Purchasing",data)
+            .then(response => { 
+                const purchase = response.data;
+                // console.log(purchase);
+                setPurchasers(purs => purchase);
+                console.log(purchase);
+            
+            })
+            .catch(error => console.log(error));
+
     }
 
     return(
@@ -25,10 +39,10 @@ export const Proveedores = () => {
                         <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="nombreVendedor">Nombre Vendedor</InputGroup.Text>
+                                <InputGroup.Text id="NombreVendedor">Nombre Vendedor</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                    name="nombreVendedor"
+                                    name="NombreVendedor"
                                     ref={register}
                                 />
                             </InputGroup>
@@ -36,10 +50,10 @@ export const Proveedores = () => {
                         <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="nombreShipMetod">Nombre método envío</InputGroup.Text>
+                                <InputGroup.Text id="NombreShipMethod">Nombre método envío</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="nombreShipMetod"
+                                 name="NombreShipMethod"
                                  ref={register}
                                 />
                             </InputGroup>
@@ -47,10 +61,10 @@ export const Proveedores = () => {
                         <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="nombreProducto">Nombre Producto</InputGroup.Text>
+                                <InputGroup.Text id="NombreProducto">Nombre Producto</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="nombreProducto"
+                                 name="NombreProducto"
                                  ref={register}
                                 />
                             </InputGroup>
@@ -60,11 +74,11 @@ export const Proveedores = () => {
                     <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="idProducto">ID Producto</InputGroup.Text>
+                                <InputGroup.Text id="ProductID">ID Producto</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
                                 type="number"
-                                 name="idProducto"
+                                 name="ProductID"
                                  ref={register}
                                 />
                             </InputGroup>
@@ -72,10 +86,10 @@ export const Proveedores = () => {
                         <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="precio1">Precio máximo</InputGroup.Text>
+                                <InputGroup.Text id="Precio2">Precio máximo</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="precio1"
+                                 name="Precio2"
                                  type="number"
                                  ref={register}
                                 />
@@ -84,10 +98,10 @@ export const Proveedores = () => {
                         <Col xs={6} md={4}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="precio2">Precio mínimo</InputGroup.Text>
+                                <InputGroup.Text id="Precio1">Precio mínimo</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                 name="precio2"
+                                 name="Precio1"
                                  type="number"
                                  ref={register}
                                 />
@@ -111,14 +125,18 @@ export const Proveedores = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>mm</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                {
+                    purchasers.map( (purs) => (
+                        <tr>
+                        <td>{purs.PurchaseOrderID}</td>
+                        <td>{purs.VendorName}</td>
+                        <td>{purs.ShipMethodID}</td>
+                        <td>{purs.ProductID}</td>
+                        <td>{purs.ProductName}</td>
+                        <td>{purs.TotalDue}</td>
                     </tr>
+                    ))
+                }
                 </tbody>
             </Table>
             <br></br>
