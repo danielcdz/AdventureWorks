@@ -1,6 +1,6 @@
 exports.serverConfig = {
-	user: 'Test',
-	password: '12345678',
+	user: 'userDevDB1',
+	password: '1234',
 	server: 'localhost',
 	database: 'AdventureWorks2017',
 	options: {

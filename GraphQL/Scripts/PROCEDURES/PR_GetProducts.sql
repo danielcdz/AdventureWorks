@@ -26,7 +26,7 @@ create PROCEDURE PR_GETPRODUCTS
 		AND (@NumeroProducto IS NULL OR lower(P.ProductNumber) like lower('%'+@NumeroProducto+'%'))
 		AND (@NombreCategoria IS NULL OR lower(PC.Name) like lower('%'+@NombreCategoria+'%'))
 		AND (@Precio1 IS NULL OR P.StandardCost BETWEEN @Precio1 and @Precio2)
-		AND (@NombreModelo IS NULL OR @NombreModelo = PM.Name)
+		AND (@NombreModelo IS NULL OR lower(PM.Name)like lower('%'+@NombreModelo+'%'))
 		ORDER BY P.ProductID
 	END
-	execute PR_GETPRODUCTS null,null,null,null,null,null
+	exec PR_GETPRODUCTS null,null,null,300,39000,null

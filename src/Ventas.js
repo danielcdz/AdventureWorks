@@ -17,6 +17,10 @@ export const Ventas = () => {
 
 
     const [sales, setSales] = useState([]);
+    const [sales2, setSales2] = useState([]);
+
+    const [sales3, setSales3] = useState([]);
+
 
     const {register, handleSubmit} = useForm();
 
@@ -35,6 +39,35 @@ export const Ventas = () => {
 
     }
 
+    const onSubmit2 = (data) => {
+        const dataJson = JSON.stringify(data);
+        console.log(dataJson);
+        axios.post("http://localhost:9000/IngresosTotales",data)
+            .then(response => { 
+                const sale = response.data;
+                // console.log(purchase);
+                setSales2(vend => sale);
+                console.log(sale);
+            
+            })
+            .catch(error => console.log(error));
+
+    }
+    const onSubmit3 = (data) => {
+        const dataJson = JSON.stringify(data);
+        console.log(dataJson);
+        axios.post("http://localhost:9000/VentasTerritorioID",data)
+            .then(response => { 
+                const sale = response.data;
+                // console.log(purchase);
+                setSales3(vend => sale);
+                console.log(sale);
+            
+            })
+            .catch(error => console.log(error));
+
+    }
+
     return(
         <div>
             <h4> Módulo de Ventas\AdventureWorks2017</h4>
@@ -45,6 +78,105 @@ export const Ventas = () => {
             <hr></hr>
             <LineChart/>
             <br></br>
+            <br></br>
+            <h5> Consulta de ventas totales por año</h5>
+            <hr></hr>
+            <form onSubmit={handleSubmit(onSubmit2)}>
+                <Container>
+                    <Row>              
+                        <Col xs={6} md={4}>
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Prepend>
+                                    <InputGroup.Text id="yearP">Año</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                    name="yearP"
+                                    type="number"
+                                    ref={register}
+                                    />
+                                </InputGroup>
+                            </Col>
+                            <Col xs={6} md={4}>
+                                
+                    <Button variant="info" type="submit" >Buscar</Button>
+                            </Col>
+                        
+                        
+                    </Row>                  
+                </Container> 
+            </form>
+            <Table responsive striped bordered hover size="sm" variant="dark" >
+                <thead>
+                    <tr>
+                    <th>GananciasTotales</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {
+                    sales2.map( (sale) => (
+                        <tr>
+                        <td>{sale.GananciasTotales}</td>
+                    </tr>
+                    ))
+                }
+                </tbody>
+            </Table>
+            
+            <br></br>
+            <br></br>
+            <h5> Consulta de ventas por ID Territorio</h5>
+            <hr></hr>
+            <form onSubmit={handleSubmit(onSubmit3)}>
+                <Container>
+                    <Row>              
+                        <Col xs={6} md={4}>
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Prepend>
+                                    <InputGroup.Text id="territorioID">ID Territorio</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                    name="territorioID"
+                                    type="number"
+                                    ref={register}
+                                    />
+                                </InputGroup>
+                            </Col>
+                            <Col xs={6} md={4}>
+                                
+                    <Button variant="info" type="submit" >Buscar</Button>
+                            </Col>
+                        
+                        
+                    </Row>                  
+                </Container> 
+            </form>
+            <Table responsive striped bordered hover size="sm" variant="dark" >
+                <thead>
+                    <tr>
+                        <th>IDOrden</th>
+                        <th>FechaOrden</th>
+                        <th>FechaEnvio</th>
+                        <th>IDTerritorio</th>
+                        <th>NombreTerritorio</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {
+                    sales3.map( (sale) => (
+                        <tr>
+                            <td>{sale.SalesOrderID}</td>
+                            <td>{sale.OrderDate}</td>
+                            <td>{sale.ShipDate}</td>
+                            <td>{sale.TerritoryID}</td>
+                            <td>{sale.Name}</td>
+                            <td>{sale.TotalDue}</td>
+                        </tr>
+                    ))
+                }
+                </tbody>
+            </Table>
+            
             <br></br>
             <br></br>
             <h5> Búsqueda de Ventas por filtros</h5>
@@ -117,7 +249,6 @@ export const Ventas = () => {
                 </Container> 
             </form>
             <br></br>
-            <hr></hr>
             <Styles>
                 <div className="divtable">
             <Table responsive striped bordered hover size="sm" variant="dark" >

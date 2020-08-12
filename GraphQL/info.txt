@@ -1,0 +1,8 @@
+[NOMBRE DEL CURSO] = Bases de Datos 1
+[SEMESTRE] = Semestre 1
+[AÑO] = 2020
+[ESTUDIANTES] {
+	Alex Sánchez Céspedes (2018014778)
+	Daniel Calderón Díaz (2018229200)
+}
+[ENLACE GITHUB]=[https://github.com/danielcdz/AdventureWorks]
